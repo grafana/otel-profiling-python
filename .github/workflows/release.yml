@@ -9,6 +9,12 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
+      - uses: grafana/shared-workflows/actions/get-vault-secrets@main
+        with:
+          vault_instance: dev
+          # Secrets placed in the ci/repo/grafana/otel-profiling-python/ path in Vault
+          repo_secrets: |
+            PYPI_API_TOKEN=publishing:pypi_api_key
       - uses: robinraju/release-downloader@v1.4
         with: 
           tag: ${{ github.event.release.tag_name }}
@@ -21,4 +27,4 @@ jobs:
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           user: __token__
-          password: ${{ secrets.PYPI_API_TOKEN }}
+          password: ${{ env.PYPI_API_TOKEN }}
