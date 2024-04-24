@@ -5,8 +5,12 @@ on:
     tags:
     - 'v*'
 
+permissions:
+  contents: read
+  id-token: write
+
 jobs:
-  build:
+  release:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -37,12 +41,6 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: grafana/shared-workflows/actions/get-vault-secrets@main
-        with:
-          vault_instance: dev
-          # Secrets placed in the ci/repo/grafana/otel-profiling-python/ path in Vault
-          repo_secrets: |
-            PYPI_API_TOKEN=publishing:pypi_api_key
       - uses: robinraju/release-downloader@v1.4
         with: 
           tag: ${{ github.event.release.tag_name }}
@@ -51,6 +49,12 @@ jobs:
           zipBall: false 
           out-file-path: "dist"
           token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: grafana/shared-workflows/actions/get-vault-secrets@main
+        with:
+          vault_instance: dev
+          # Secrets placed in the ci/repo/grafana/otel-profiling-python/ path in Vault
+          repo_secrets: |
+            PYPI_API_TOKEN=publishing:pypi_api_key
       - name: Publish a Python distribution to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
