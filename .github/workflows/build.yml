@@ -5,4 +5,19 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-    
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v5
+        with:
+          python-version: 3.12
+      - name: Install build
+        run: pip install build
+      - name: Build wheel and sdist
+        run: python -m build --sdist --wheel
+      - uses: actions/upload-artifact@v2
+        with:
+          path: dist/*
