@@ -1,11 +1,39 @@
 name: Publish to pypi.org
 
 on:
-  workflow_dispatch:
-  release:
-    types: [published]
+  push:
+    tags:
+    - 'v*'
 
 jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v5
+        with:
+          python-version: 3.12
+      - name: Install pip build
+        run: pip install build
+      - name: Build wheel and sdist
+        run: python -m build --sdist --wheel
+      - name: Create GitHub release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+      - name: Upload release artifacts
+        uses: korniltsev/actions-upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: "dist/*"
   publish:
     runs-on: ubuntu-latest
     steps:
