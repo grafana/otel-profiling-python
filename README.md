@@ -13,7 +13,7 @@ See https://grafana.com/docs/pyroscope/latest/configure-client/trace-span-profil
 Add the following package to your project:
 
 ```shell
-pip install pyroscole-otel
+pip install pyroscope-otel
 ```
 
 Register the `PyroscopeSpanProcessor` in your OpenTelemetry integration:
