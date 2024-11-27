@@ -11,6 +11,6 @@ requires-python = ">= 3.8"
 dependencies = [
   "opentelemetry-api>=1.27.0, <2.0.0",
   "opentelemetry-sdk>=1.27.0, <2.0.0",
-  "pyroscope-io==0.8.7"
+  "pyroscope-io==0.8.8"
 ]
 license = {file = "LICENSE"}
