@@ -23,7 +23,7 @@ Register the `PyroscopeSpanProcessor` in your OpenTelemetry integration:
 from opentelemetry import trace
 from opentelemetry.sdk.trace import TracerProvider
 
-from pyroscope-otel import PyroscopeSpanProcessor
+from pyroscope.otel import PyroscopeSpanProcessor
 
 provider = TracerProvider()
 provider.add_span_processor(PyroscopeSpanProcessor())
