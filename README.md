@@ -88,7 +88,7 @@ provider.add_span_processor(PyroscopeSpanProcessor())
 # from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import OTLPSpanExporter
 #
 # otlp_exporter = OTLPSpanExporter(
-#     endpoint="tempo-blocks-prod-us-central-1.grafana-cloud.com:443",
+#     endpoint="<your-tempo-instance>.grafana.net:443",
 #     headers=(("Authorization", "Bearer <your-grafana-cloud-token>"),),
 # )
 # provider.add_span_processor(BatchSpanProcessor(otlp_exporter))
