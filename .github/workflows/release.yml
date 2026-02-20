@@ -52,7 +52,7 @@ jobs:
           zipBall: false 
           out-file-path: "dist"
           token: ${{ secrets.GITHUB_TOKEN }}
-      - uses: grafana/shared-workflows/actions/get-vault-secrets@974c33049d0967c5c9cfc249fe675daf341dc78f
+      - uses: grafana/shared-workflows/actions/get-vault-secrets@c2f1df59dba624b3fd509e5181aa8da5217120c0
         with:
           vault_instance: dev
           # Secrets placed in the ci/repo/grafana/otel-profiling-python/ path in Vault
