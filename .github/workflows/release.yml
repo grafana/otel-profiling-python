@@ -21,37 +21,28 @@ jobs:
         run: pip install build
       - name: Build wheel and sdist
         run: python -m build --sdist --wheel
-      - name: Create GitHub release
-        id: create_release
-        uses: actions/create-release@0cb9c9b65d5d1901c1f53e5e66eaf4afd303e70e # v1
+      - name: Upload dist as workflow artifact
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: dist
+          path: dist/*
+      - name: Create GitHub release and upload release assets
+        uses: softprops/action-gh-release@a06a81a03ee405af7f2048a818ed3f03bbf83c7b # v2.5.0
+        with:
+          files: dist/*
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: false
-          prerelease: false
-      - name: Upload release artifacts
-        uses: korniltsev/actions-upload-release-asset@a7f1a48a96ff80f206fd26bdbfcf81539d44fa5e # TODO(korniltsev): get rid of this fork
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: "dist/*"
   publish:
     needs: release
     runs-on: ubuntu-x64
     permissions:
       id-token: write
     steps:
-      - uses: robinraju/release-downloader@ed86e52bc497d1185844fc28454c5999aaed2fa5 # v1.4
-        with: 
-          tag: ${{ github.ref_name }}
-          fileName: "*"
-          tarBall: false 
-          zipBall: false 
-          out-file-path: "dist"
-          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Download dist artifact
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: dist
+          path: dist
       - uses: grafana/shared-workflows/actions/get-vault-secrets@c2f1df59dba624b3fd509e5181aa8da5217120c0
         with:
           vault_instance: dev
