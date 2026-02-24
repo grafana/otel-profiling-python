@@ -1,5 +1,4 @@
 import typing
-import threading
 
 from opentelemetry.sdk.trace import (
     Span,
@@ -28,13 +27,13 @@ class PyroscopeSpanProcessor(SpanProcessor):
     ) -> None:
         if _is_root_span(span):
             span.set_attribute(PROFILE_ID_SPAN_ATTRIBUTE_KEY, format(span.context.span_id, "016x"))
-            pyroscope.add_thread_tag(threading.get_ident(), PROFILE_ID_PYROSCOPE_TAG_KEY, _get_span_id(span))
-            pyroscope.add_thread_tag(threading.get_ident(), SPAN_NAME_PYROSCOPE_TAG_KEY, span.name)
+            pyroscope.add_thread_tag(PROFILE_ID_PYROSCOPE_TAG_KEY, _get_span_id(span))
+            pyroscope.add_thread_tag(SPAN_NAME_PYROSCOPE_TAG_KEY, span.name)
 
     def on_end(self, span: ReadableSpan) -> None:
         if _is_root_span(span):
-            pyroscope.remove_thread_tag(threading.get_ident(), PROFILE_ID_PYROSCOPE_TAG_KEY, _get_span_id(span))
-            pyroscope.remove_thread_tag(threading.get_ident(), SPAN_NAME_PYROSCOPE_TAG_KEY, span.name)
+            pyroscope.remove_thread_tag(PROFILE_ID_PYROSCOPE_TAG_KEY, _get_span_id(span))
+            pyroscope.remove_thread_tag(SPAN_NAME_PYROSCOPE_TAG_KEY, span.name)
 
     def shutdown(self) -> None:
         pass
