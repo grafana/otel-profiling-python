@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "pyroscope-otel"
 description = "A library providing profiling functionalities related to OpenTelemetry"
 readme = "README.md"
-version = "0.4.1"
+version = "1.0.0"
 requires-python = ">= 3.8"
 dependencies = [
   "opentelemetry-api>=1.27.0, <2.0.0",
