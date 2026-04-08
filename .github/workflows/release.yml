@@ -43,7 +43,7 @@ jobs:
         with:
           name: dist
           path: dist
-      - uses: grafana/shared-workflows/actions/get-vault-secrets@a2e485723e166cfec831d33751b9e5b66e2d7646
+      - uses: grafana/shared-workflows/actions/get-vault-secrets@e7a3275d4c4978a3514801ec55708f1c599a6906
         with:
           vault_instance: dev
           # Secrets placed in the ci/repo/grafana/otel-profiling-python/ path in Vault
