@@ -42,6 +42,12 @@ pyroscope_configure(
 
 The `PyroscopeSpanProcessor` automatically attaches the profile identifier (`pyroscope.profile.id`) as an attribute to the **root span** of each trace. This creates a direct link between traces and their corresponding performance profiles in Grafana Tempo, allowing you to navigate from any trace to the exact performance profile data for that transaction.
 
+On the profiling side, the processor adds these thread-level Pyroscope tags for the lifetime of the root span (child spans running on the same thread inherit them via the thread-local state):
+
+* `span_id`: the root span's ID (16 hex chars).
+* `span_name`: the root span's name.
+* `trace_id`: the trace ID (32 hex chars). Enables filtering profile samples by trace on the Pyroscope server. Default on; pass `PyroscopeSpanProcessor(trace_id_enabled=False)` to disable.
+
 ## Manual Instrumentation
 
 Configure OpenTelemetry explicitly (after Pyroscope is already configured):
