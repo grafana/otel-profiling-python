@@ -68,14 +68,5 @@ jobs:
           TAG_NAME: ${{ needs.release-please.outputs.tag_name }}
         run: gh release edit "$TAG_NAME" --draft=false
 
-      - uses: grafana/shared-workflows/actions/get-vault-secrets@a2e485723e166cfec831d33751b9e5b66e2d7646
-        with:
-          vault_instance: dev
-          repo_secrets: |
-            PYPI_API_TOKEN=publishing:pypi_api_key
-
       - name: Publish a Python distribution to PyPI
         uses: pypa/gh-action-pypi-publish@ed0c53931b1dc9bd32cbe73a98c7f6766f8a527e # v1.13.0
-        with:
-          user: __token__
-          password: ${{ env.PYPI_API_TOKEN }}
