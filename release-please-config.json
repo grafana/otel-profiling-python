@@ -1,0 +1,25 @@
+{
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
+  "bootstrap-sha": "a053d9e79a89b07e685f907bf810acf6fe326a1f",
+  "include-component-in-tag": false,
+  "include-v-in-tag": true,
+  "draft": true,
+  "skip-changelog": true,
+  "packages": {
+    ".": {
+      "release-type": "python",
+      "package-name": "pyroscope-otel",
+      "changelog-sections": [
+        {"type": "feat", "section": "Features"},
+        {"type": "fix", "section": "Bug Fixes"},
+        {"type": "perf", "section": "Performance Improvements"},
+        {"type": "chore", "section": "Miscellaneous Chores"},
+        {"type": "revert", "section": "Reverts"},
+        {"type": "docs", "section": "Documentation"},
+        {"type": "refactor", "section": "Code Refactoring"},
+        {"type": "build", "section": "Build System"},
+        {"type": "ci", "section": "Continuous Integration"}
+      ]
+    }
+  }
+}
