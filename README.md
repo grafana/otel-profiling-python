@@ -46,7 +46,7 @@ On the profiling side, the processor adds these thread-level Pyroscope tags for 
 
 * `span_id`: the root span's ID (16 hex chars).
 * `span_name`: the root span's name.
-* `trace_id`: the trace ID (32 hex chars). Enables filtering profile samples by trace on the Pyroscope server. Default on; pass `PyroscopeSpanProcessor(trace_id_enabled=False)` to disable.
+* `trace_id`: the trace ID (32 hex chars). Enables filtering profile samples by trace on the Pyroscope server.
 
 ## Manual Instrumentation
 
